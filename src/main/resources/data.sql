@@ -8,6 +8,6 @@
 
 
 INSERT INTO TEST_TABLE(first_name, last_name) VALUES
-('Artem', 'Puzikov'),
-('Kate', 'Shatalova'),
+('User1', 'us'),
+('User2', 'usr'),
 ('User', 'Userovich');
