@@ -15,6 +15,11 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.4.1'
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.4.1'
+	compile 'com.h2database:h2:1.4.200'
+
+
 }
 
 test {
