@@ -1,7 +1,3 @@
--- INSERT INTO TEST_TABLE(first_name, last_name) VALUES
---     ('Artem', 'Puzikov'),
---     ('Kate', 'Shatalova'),
---     ('User', 'Userovich');
 
 DROP TABLE IF EXISTS TEST_TABLE;
 
