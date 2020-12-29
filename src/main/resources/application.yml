@@ -1,0 +1,15 @@
+spring:
+    datasource:
+#        initialization-mode: always
+        url: jdbc:h2:file:./src/main/resources/db/movies
+        platform: h2
+    session:
+      jdbc:
+          initialize-schema: always
+    h2:
+        console:
+            enabled: true
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: on
