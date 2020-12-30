@@ -8,7 +8,6 @@ import ru.puzikov.serviceselector.domain.Movie;
 import ru.puzikov.serviceselector.repository.MovieRepository;
 
 @SpringBootApplication
-@EntityScan(basePackages = {"domain"})
 public class MovieSelectorApplication {
 
 	public static void main(String[] args) {

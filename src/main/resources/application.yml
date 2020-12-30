@@ -1,6 +1,10 @@
+server:
+    port: 8081
+    servlet:
+        context-path: /puzikov
 spring:
     datasource:
-#        initialization-mode: always
+        initialization-mode: always
         url: jdbc:h2:file:./src/main/resources/db/movies
         platform: h2
     session:
@@ -11,5 +15,5 @@ spring:
             enabled: true
     jpa:
         hibernate:
-            ddl-auto: update
+            ddl-auto: create-drop
         show-sql: on
