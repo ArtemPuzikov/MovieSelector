@@ -9,6 +9,6 @@ import ru.puzikov.serviceselector.service.MovieService;
 @RequiredArgsConstructor
 public class MovieServiceImpl implements MovieService {
 
-  private final MovieRepository movieRepository;
+  private final MovieRepository movieRepository; //так происходит инжект бина (Lombok @RequiredArgsConstructor) Лучший вариант, так как поле final позволяет сохранить класс неизменяемым
 
 }
