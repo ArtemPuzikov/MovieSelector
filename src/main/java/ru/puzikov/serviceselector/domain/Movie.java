@@ -1,10 +1,18 @@
 package ru.puzikov.serviceselector.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@Data
 @Entity
+@EqualsAndHashCode
 @Table(name = "MOVIE_TABLE")
 public class Movie {
 
@@ -39,63 +47,5 @@ public class Movie {
         this.rate = rate;
         this.genre = genre;
         this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
-    public int getRate() {
-        return rate;
-    }
-
-    public void setRate(int rate) {
-        this.rate = rate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Movie movie = (Movie) o;
-        return year == movie.year &&
-                rate == movie.rate &&
-                id.equals(movie.id) &&
-                name.equals(movie.name) &&
-                genre.equals(movie.genre) &&
-                description.equals(movie.description);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, year, rate, genre, description);
     }
 }

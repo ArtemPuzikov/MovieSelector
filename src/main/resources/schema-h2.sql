@@ -1,5 +1,5 @@
 
--- DROP TABLE IF EXISTS MOVIE_TABLE;
+DROP TABLE IF EXISTS MOVIE_TABLE;
 
 CREATE TABLE MOVIE_TABLE(
                            id bigint auto_increment primary key ,
