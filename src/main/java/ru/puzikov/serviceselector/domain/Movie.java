@@ -7,8 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+import lombok.*;
 
 @Data
 @Entity
@@ -41,7 +41,12 @@ public class Movie {
     @Column(name = "description")
     private String description;
 
+    public Movie(){
+
+    }
+
     public Movie(@NotNull String name, @NotNull int year, @NotNull int rate, @NotNull String genre, @NotNull String description) {
+
         this.name = name;
         this.year = year;
         this.rate = rate;

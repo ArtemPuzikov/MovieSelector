@@ -1,12 +1,17 @@
 package ru.puzikov.serviceselector.dto.response;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import ru.puzikov.serviceselector.dto.MovieDto;
 
-@Data
+import java.util.List;
+
+
 @AllArgsConstructor
 public class MovieResponse {
-  List<MovieDto> movies;
+    List<MovieDto> movies;
+
+
+    public List<MovieDto> getMovies() {
+        return this.movies;
+    }
 }
