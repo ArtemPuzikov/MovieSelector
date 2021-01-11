@@ -2,9 +2,9 @@ package ru.puzikov.serviceselector.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 import ru.puzikov.serviceselector.dto.MovieDto;
 import ru.puzikov.serviceselector.dto.response.MovieResponse;
 import ru.puzikov.serviceselector.service.impl.MovieServiceImpl;
@@ -69,7 +69,6 @@ public class MovieController {
         return ResponseEntity.ok(movieDto);
     }
 
-//    @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @PutMapping(value = "")
     public ResponseEntity<?> updateMovie(@RequestBody MovieDto movieDto) {
 
@@ -82,7 +81,6 @@ public class MovieController {
         return ResponseEntity.ok(movieDto);
     }
 
-//    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @DeleteMapping(value = "delete/{id}")
     public ResponseEntity<?> deleteMovieById(@PathVariable("id") Long id) {
         MovieDto movieDto = this.movieService.getMovieById(id);
