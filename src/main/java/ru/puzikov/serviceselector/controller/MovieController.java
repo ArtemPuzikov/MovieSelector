@@ -18,14 +18,12 @@ import java.util.List;
 public class MovieController {
     private static final String GET_MOVIE = "get/";
     private static final String GET_ALL_MOVIES = "get/all";
-    private HttpHeaders header;
 
     @Autowired
     MovieServiceImpl movieService;
 
-    @RequestMapping(value = GET_MOVIE, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = GET_MOVIE)
     public ResponseEntity<?> getRandomMovie() {
-        header = getHttpHeader();
         MovieDto movieDto = this.movieService.getMovie();
 
         if (movieDto == null) {
@@ -35,9 +33,8 @@ public class MovieController {
         return ResponseEntity.ok(movieDto);
     }
 
-    @RequestMapping(value = GET_MOVIE + "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = GET_MOVIE + "{id}")
     public ResponseEntity<?> getMovie(@PathVariable("id") Long id) {
-        header = getHttpHeader();
         MovieDto movieDto = this.movieService.getMovieById(id);
 
         if (movieDto == null) {
@@ -47,9 +44,8 @@ public class MovieController {
         return ResponseEntity.ok(movieDto);
     }
 
-    @RequestMapping(value = GET_ALL_MOVIES, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = GET_ALL_MOVIES)
     public ResponseEntity<?> getAllMovies() {
-        header = getHttpHeader();
         List<MovieDto> movieDtos = this.movieService.getAll();
 
         if (movieDtos.isEmpty()) {
@@ -61,9 +57,8 @@ public class MovieController {
         return ResponseEntity.ok(movieResponse.getMovies());
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "")
     public ResponseEntity<?> saveMovie(@RequestBody @Valid MovieDto movieDto) {
-        header = getHttpHeader();
 
         if (movieDto == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -74,9 +69,9 @@ public class MovieController {
         return ResponseEntity.ok(movieDto);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @RequestMapping(value = "", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "")
     public ResponseEntity<?> updateMovie(@RequestBody MovieDto movieDto) {
-        header = getHttpHeader();
 
         if (movieDto == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -87,9 +82,9 @@ public class MovieController {
         return ResponseEntity.ok(movieDto);
     }
 
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+//    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "delete/{id}")
     public ResponseEntity<?> deleteMovieById(@PathVariable("id") Long id) {
-        header = getHttpHeader();
         MovieDto movieDto = this.movieService.getMovieById(id);
 
         if (movieDto == null) {
@@ -101,9 +96,8 @@ public class MovieController {
         return ResponseEntity.ok(movieDto);
     }
 
-    @RequestMapping(value = "delete/name/{name}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "delete/name/{name}")
     public ResponseEntity<?> deleteMovieByName(@PathVariable("name") String name) {
-        header = getHttpHeader();
         MovieDto movieDto = this.movieService.getMovieByName(name);
 
         if (movieDto == null) {
@@ -113,12 +107,6 @@ public class MovieController {
         movieService.deleteByName(name);
 
         return ResponseEntity.ok(movieDto);
-    }
-
-    public HttpHeaders getHttpHeader() {
-        HttpHeaders header = new HttpHeaders();
-        header.add("desc", "MovieResponse");
-        return header;
     }
 
 }

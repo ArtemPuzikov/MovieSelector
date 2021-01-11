@@ -4,11 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.puzikov.serviceselector.domain.Movie;
 import ru.puzikov.serviceselector.dto.MovieDto;
-import ru.puzikov.serviceselector.dto.response.MovieResponse;
 import ru.puzikov.serviceselector.repository.MovieRepository;
 import ru.puzikov.serviceselector.service.MovieService;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
