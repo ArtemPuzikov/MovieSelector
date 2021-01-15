@@ -1,15 +1,18 @@
 package ru.puzikov.serviceselector.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.puzikov.serviceselector.domain.Movie;
 import ru.puzikov.serviceselector.dto.MovieDto;
+import ru.puzikov.serviceselector.dto.response.MovieResponse;
 import ru.puzikov.serviceselector.repository.MovieRepository;
 import ru.puzikov.serviceselector.service.MovieService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -92,21 +95,36 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDto> getAll() {
 
         List<Movie> movies = movieRepository.findAll();
-        List<MovieDto> movieDtos = new ArrayList<>();
+        List<MovieDto> movieDtos = movies.stream().map(movie -> MovieDto.builder()
+                .name(movie.getName())
+                .year(movie.getYear())
+                .rate(movie.getRate())
+                .genre(movie.getGenre())
+                .description(movie.getDescription())
+                .build()).collect(Collectors.toList());
 
-        for (Movie movie : movies) {
-            MovieDto movieDto = MovieDto.builder()
-                    .name(movie.getName())
-                    .year(movie.getYear())
-                    .rate(movie.getRate())
-                    .genre(movie.getGenre())
-                    .description(movie.getDescription())
-                    .build();
-
-            movieDtos.add(movieDto);
-        }
+//        movies.stream().map(movie -> MovieDto.builder()
+//                .name(movie.getName())
+//                .year(movie.getYear())
+//                .rate(movie.getRate())
+//                .genre(movie.getGenre())
+//                .description(movie.getDescription())
+//                .build()).forEach(movieDtos::add);
 
         return movieDtos;
+    }
+
+    public MovieResponse formMovieResponse(List<MovieDto> movieDto) {
+        MovieResponse movieResponse = new MovieResponse();
+
+        if (movieDto == null) {
+            movieResponse.setHttpStatus(HttpStatus.NO_CONTENT);
+        }
+
+        movieResponse.setMovies(movieDto);
+        movieResponse.setHttpStatus(HttpStatus.OK);
+
+        return movieResponse;
     }
 
 }

@@ -13,13 +13,10 @@ import lombok.*;
 @Data
 @Entity
 @EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "MOVIE_TABLE")
-public class Movie {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
+public class Movie extends BaseEntity{
 
     @NotNull
     @Column(name = "name")
@@ -41,16 +38,5 @@ public class Movie {
     @Column(name = "description")
     private String description;
 
-    public Movie(){
 
-    }
-
-    public Movie(@NotNull String name, @NotNull int year, @NotNull int rate, @NotNull String genre, @NotNull String description) {
-
-        this.name = name;
-        this.year = year;
-        this.rate = rate;
-        this.genre = genre;
-        this.description = description;
-    }
 }

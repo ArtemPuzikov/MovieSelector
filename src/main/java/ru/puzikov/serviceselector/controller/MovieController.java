@@ -23,8 +23,8 @@ public class MovieController {
     MovieServiceImpl movieService;
 
     @GetMapping(value = GET_MOVIE)
-    public ResponseEntity<?> getRandomMovie() {
-        MovieDto movieDto = this.movieService.getMovie();
+    public ResponseEntity<MovieDto> getRandomMovie() {
+        MovieDto movieDto = movieService.getMovie();
 
         if (movieDto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -34,8 +34,8 @@ public class MovieController {
     }
 
     @GetMapping(value = GET_MOVIE + "{id}")
-    public ResponseEntity<?> getMovie(@PathVariable("id") Long id) {
-        MovieDto movieDto = this.movieService.getMovieById(id);
+    public ResponseEntity<MovieDto> getMovie(@PathVariable("id") Long id) {
+        MovieDto movieDto = movieService.getMovieById(id);
 
         if (movieDto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -45,45 +45,42 @@ public class MovieController {
     }
 
     @GetMapping(value = GET_ALL_MOVIES)
-    public ResponseEntity<?> getAllMovies() {
-        List<MovieDto> movieDtos = this.movieService.getAll();
+    public ResponseEntity<MovieResponse> getAllMovies() {
+        List<MovieDto> movieDtos = movieService.getAll();
+        
+        MovieResponse movieResponse = movieService.formMovieResponse(movieDtos);
+        System.out.println(movieResponse);
 
-        if (movieDtos.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        MovieResponse movieResponse = new MovieResponse(movieDtos);
-
-        return ResponseEntity.ok(movieResponse.getMovies());
+        return new ResponseEntity<>(movieResponse, movieResponse.getHttpStatus());
     }
 
     @PostMapping(value = "")
-    public ResponseEntity<?> saveMovie(@RequestBody @Valid MovieDto movieDto) {
+    public ResponseEntity<MovieDto> saveMovie(@RequestBody @Valid MovieDto movieDto) {
 
         if (movieDto == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        this.movieService.save(movieDto);
+        movieService.save(movieDto);
 
         return ResponseEntity.ok(movieDto);
     }
 
     @PutMapping(value = "")
-    public ResponseEntity<?> updateMovie(@RequestBody MovieDto movieDto) {
+    public ResponseEntity<MovieDto> updateMovie(@RequestBody MovieDto movieDto) {
 
         if (movieDto == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        this.movieService.update(movieDto);
+        movieService.update(movieDto);
 
         return ResponseEntity.ok(movieDto);
     }
 
     @DeleteMapping(value = "delete/{id}")
-    public ResponseEntity<?> deleteMovieById(@PathVariable("id") Long id) {
-        MovieDto movieDto = this.movieService.getMovieById(id);
+    public ResponseEntity<MovieDto> deleteMovieById(@PathVariable("id") Long id) {
+        MovieDto movieDto = movieService.getMovieById(id);
 
         if (movieDto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -95,8 +92,8 @@ public class MovieController {
     }
 
     @DeleteMapping(value = "delete/name/{name}")
-    public ResponseEntity<?> deleteMovieByName(@PathVariable("name") String name) {
-        MovieDto movieDto = this.movieService.getMovieByName(name);
+    public ResponseEntity<MovieDto> deleteMovieByName(@PathVariable("name") String name) {
+        MovieDto movieDto = movieService.getMovieByName(name);
 
         if (movieDto == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
