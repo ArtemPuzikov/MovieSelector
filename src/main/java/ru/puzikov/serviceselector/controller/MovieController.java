@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.puzikov.serviceselector.dto.MovieDto;
+import ru.puzikov.serviceselector.dto.request.MovieRequest;
 import ru.puzikov.serviceselector.dto.response.MovieResponse;
 import ru.puzikov.serviceselector.service.impl.MovieServiceImpl;
 
@@ -19,16 +20,12 @@ public class MovieController {
     private static final String GET_MOVIE = "get/";
     private static final String GET_ALL_MOVIES = "get/all";
 
-    @Autowired
-    MovieServiceImpl movieService;
+
+    private final MovieServiceImpl movieService;
 
     @GetMapping(value = GET_MOVIE)
     public ResponseEntity<MovieDto> getRandomMovie() {
         MovieDto movieDto = movieService.getMovie();
-
-        if (movieDto == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
 
         return ResponseEntity.ok(movieDto);
     }
@@ -36,10 +33,6 @@ public class MovieController {
     @GetMapping(value = GET_MOVIE + "{id}")
     public ResponseEntity<MovieDto> getMovie(@PathVariable("id") Long id) {
         MovieDto movieDto = movieService.getMovieById(id);
-
-        if (movieDto == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
 
         return ResponseEntity.ok(movieDto);
     }
@@ -49,31 +42,24 @@ public class MovieController {
         List<MovieDto> movieDtos = movieService.getAll();
         
         MovieResponse movieResponse = movieService.formMovieResponse(movieDtos);
+
         System.out.println(movieResponse);
 
-        return new ResponseEntity<>(movieResponse, movieResponse.getHttpStatus());
+        return ResponseEntity.ok(movieResponse);
     }
 
     @PostMapping(value = "")
-    public ResponseEntity<MovieDto> saveMovie(@RequestBody @Valid MovieDto movieDto) {
+    public ResponseEntity<MovieDto> saveMovie(@RequestBody @Valid MovieRequest movieRequest) {
 
-        if (movieDto == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        movieService.save(movieDto);
+        MovieDto movieDto = movieService.save(movieRequest);
 
         return ResponseEntity.ok(movieDto);
     }
 
     @PutMapping(value = "")
-    public ResponseEntity<MovieDto> updateMovie(@RequestBody MovieDto movieDto) {
+    public ResponseEntity<MovieDto> updateMovie(@RequestBody @Valid MovieRequest movieRequest) {
 
-        if (movieDto == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        movieService.update(movieDto);
+      MovieDto movieDto = movieService.update(movieRequest);
 
         return ResponseEntity.ok(movieDto);
     }
@@ -82,9 +68,6 @@ public class MovieController {
     public ResponseEntity<MovieDto> deleteMovieById(@PathVariable("id") Long id) {
         MovieDto movieDto = movieService.getMovieById(id);
 
-        if (movieDto == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
 
         movieService.deleteById(id);
 
@@ -94,10 +77,6 @@ public class MovieController {
     @DeleteMapping(value = "delete/name/{name}")
     public ResponseEntity<MovieDto> deleteMovieByName(@PathVariable("name") String name) {
         MovieDto movieDto = movieService.getMovieByName(name);
-
-        if (movieDto == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
 
         movieService.deleteByName(name);
 

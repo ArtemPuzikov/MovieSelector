@@ -1,21 +1,24 @@
 package ru.puzikov.serviceselector.service;
 
 import ru.puzikov.serviceselector.dto.MovieDto;
+import ru.puzikov.serviceselector.dto.request.MovieRequest;
+import ru.puzikov.serviceselector.dto.response.MovieResponse;
 
 import java.util.List;
 
 public interface MovieService {
-    public MovieDto getMovieById(Long id);
 
-    public MovieDto getMovie();
+    MovieDto getMovieById(Long id);
 
-    public void save(MovieDto movieDto);
+    MovieDto getMovie();
 
-    void update(MovieDto movieDto);
+    MovieDto save(MovieRequest movieRequest);
 
-    public void deleteById(Long id);
+    MovieDto update(MovieRequest movieRequest);
 
-    public void deleteByName(String name);
+    MovieDto deleteById(Long id);
 
-    public List<MovieDto> getAll();
+    MovieDto deleteByName(String name);
+
+    List<MovieDto> getAll();
 }
